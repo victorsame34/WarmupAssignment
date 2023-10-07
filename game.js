@@ -1,28 +1,37 @@
+var pointsplayer = 0;
+var pointscomputer = 0;
+const results = [];
 function playRound(playerSelection, computerSelection) {
-    if(playerSelection === computerSelection) {
+    if (playerSelection === computerSelection) {
         return "The result is a tie!";
     }
-    if(playerSelection === "rock") {
-        if(computerSelection === "scissors") {
+    if (playerSelection === "rock") {
+        if (computerSelection === "scissors") {
+            pointsplayer++;
             return "You Won! Rock beats Scissors";
         } else {
+            pointscomputer++;
             return "You Lose! Paper beats Rock";
         }
     }
-    if(playerSelection === "paper") {
-        if(computerSelection === "rock") {
+    if (playerSelection === "paper") {
+        if (computerSelection === "rock") {
+            pointsplayer++;
             return "You Won! Paper beats Rock";
         } else {
-            if(computerSelection === "scissors") {
+            if (computerSelection === "scissors") {
+                pointscomputer++;
                 return "You Lose! Scissors beats Paper";
             }
         }
     }
-    if(playerSelection === "scissors") {
-        if(computerSelection === "rock") {
+    if (playerSelection === "scissors") {
+        if (computerSelection === "rock") {
+            pointscomputer++;
             return "You Lose! Scissors beats Rock";
         } else {
-            if(computerSelection === "paper") {
+            if (computerSelection === "paper") {
+                pointsplayer++;
                 return "You Won! Scissors beats Paper";
             }
         }
@@ -41,20 +50,14 @@ function computerPlay() {
     }
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        do {
-            var userChoice = prompt("Do you choose rock, paper or scissors? Write the option in the space below");
-            var correctChoice = false;
-            var playerSelection = userChoice.toLowerCase();
-            if (playerSelection == "rock" || playerSelection == "paper" || playerSelection == "scissors") {
-                correctChoice = true;
-            } else {
-                alert("Invalid!! You digited " + playerSelection + " Please write rock, paper or scissors");
-            }
-        } while (correctChoice == false);
+function game(playerSelection) {
+    if (pointsplayer == 5) {
+        return document.getElementById("winner").innerHTML = "The winner is you! Congratulations!!";
+    } else if (pointscomputer == 5) {
+        return document.getElementById("winner").innerHTML = "You lost! Better chance the next time";
+    } else {
         const computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
+        results.push("<li>"+playRound(playerSelection, computerSelection)+"</li>");
+        document.getElementById("result").innerHTML = results.toString();
     }
 }
-game();
